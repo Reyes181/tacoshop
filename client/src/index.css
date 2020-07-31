@@ -1,0 +1,44 @@
+@font-face {
+  src: url(./assets/fonts/InterstateBlackCondensed.ttf);
+  font-family: Interstate;
+}
+@font-face {
+  src: url(./assets/fonts/brandon/Brandon_blk.otf);
+  font-family: BrandonBold;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: url('./assets/images/Baground-pattern-taco.jpg');
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+a {
+  transition: .4s;
+  text-decoration: none;
+  outline: none;
+  color: #0c0c0c;
+}
+
+.home-alert {
+  background: #692c8d;
+  color: #fff;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+.home-alert p {
+  margin: 0;
+  padding: 0.2rem;
+}

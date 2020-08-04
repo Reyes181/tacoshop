@@ -134,6 +134,7 @@ const FooterLeft = () => {
                 </form>
             </div>
             <h4>Hungry? Visit TacoBell</h4>
+            <h5>Not a real site, made for demonstration purposes only. ER</h5>
         </FootLeft>  
     )
     

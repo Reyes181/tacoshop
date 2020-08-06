@@ -2,6 +2,7 @@ import React, {useEffect, Suspense, lazy} from 'react';
 import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
 import {Switch, Route, Redirect} from 'react-router-dom';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import {selectCurrentUser, selectIsUserLoaded} from './redux/user/user.selectors';
 import {checkUserSession, userVerified} from './redux/user/user.action';
@@ -11,11 +12,10 @@ import {selectIsCollectionFetching, selectIsCollectionsLoaded} from './redux/sho
 import Layout from './hoc/Layout';
 import WithSpinner from './hoc/WithSpinner';
 import ErrorBoundary from './hoc/ErrorBoundary';
-import TacoSpinner from './hoc/TacoSpinner';
 
-import SauceBanner from './assets/images/sauce-packets-banner.jpg';
-import ClothingBanner from './assets/images/clothing-banner.jpg';
-import AccessoriesBanner from './assets/images/accessories-banner.png';
+import SauceBanner from './assets/images/sauce-packets-banner.webp';
+import ClothingBanner from './assets/images/clothing-banner.webp';
+import AccessoriesBanner from './assets/images/accessories-banner.webp';
 
 
 const HomePage = lazy(() => import('./components/home/Homepage')) ;
@@ -45,7 +45,7 @@ const App = ({fetchCollectionStart, checkUserSession, userVerified, isCollection
     <div>
       <Layout>
         <Switch>
-          <Suspense fallback={<TacoSpinner/>}>
+          <Suspense fallback={<CircularProgress/>}>
           <ErrorBoundary>
             <Route 
               exact 

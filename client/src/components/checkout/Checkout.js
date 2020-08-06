@@ -9,9 +9,9 @@ import {selectCurrentUser, selectUserVerified} from '../../redux/user/user.selec
 import {purchaseHistoryStart} from '../../redux/shop/shop.action';
 import {userVerified} from '../../redux/user/user.action';
 
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 import CartItem from './CartItem';
@@ -94,10 +94,8 @@ const CheckoutPage = ({cartItems, subtotal, clearCart, purchaseHistoryStart, cur
     return (
         <CheckoutContainer>
             <CheckoutOrder>
-                <ExpansionPanel defaultExpanded={true} expanded={true}>
-                    <ExpansionPanelSummary
-                        
-                    >
+                <Accordion defaultExpanded={true} expanded={true}>
+                    <AccordionSummary>
                         <ShoppingCartIcon style={{fill: '#449d97'}}/>
                         <CheckoutOrderHeader>
                             <p style={{color: '#449d97'}}>Order summary</p>
@@ -105,9 +103,9 @@ const CheckoutPage = ({cartItems, subtotal, clearCart, purchaseHistoryStart, cur
                             <p>${Number.parseFloat(shipping).toFixed(2)}</p>
                         </CheckoutOrderHeader>
                         
-                    </ExpansionPanelSummary>
+                    </AccordionSummary>
 
-                    <ExpansionPanelDetails>
+                    <AccordionDetails>
                         <CheckoutOrderContainer>
                             {paid ? 
                                 <>
@@ -122,9 +120,9 @@ const CheckoutPage = ({cartItems, subtotal, clearCart, purchaseHistoryStart, cur
                             }
                             
                         </CheckoutOrderContainer>
-                    </ExpansionPanelDetails>
+                    </AccordionDetails>
                     
-                    <ExpansionPanelDetails>
+                    <AccordionDetails>
                         <CheckoutCouponContainer>
                             <form onSubmit={handleSubmit}>
                                 <input type='text' placeholder='Discount Code' value={coupon} onChange={handleInput}/>
@@ -146,9 +144,9 @@ const CheckoutPage = ({cartItems, subtotal, clearCart, purchaseHistoryStart, cur
                             }
                             
                         </CheckoutCouponContainer>
-                    </ExpansionPanelDetails>
+                    </AccordionDetails>
                     <hr/>
-                    <ExpansionPanelDetails>
+                    <AccordionDetails>
                         <CheckoutTotalContainer>
                             <CheckoutTotalBox>
                                 <p>Subtotal</p>
@@ -198,8 +196,8 @@ const CheckoutPage = ({cartItems, subtotal, clearCart, purchaseHistoryStart, cur
                             
                             
                         </CheckoutTotalContainer>
-                    </ExpansionPanelDetails>
-                </ExpansionPanel>
+                    </AccordionDetails>
+                </Accordion>
             </CheckoutOrder>
         </CheckoutContainer>
     )

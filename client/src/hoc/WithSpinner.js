@@ -1,10 +1,12 @@
 import React from 'react';
-import TacoSpinner from './TacoSpinner';
+import {SpinnerContainer, SpinnerOverlay} from '../styles/js/with-spinner.styles';
 
 const WithSpinner = WrappedComponent => {
     const Spinner = ({isLoading, ...otherProps}) => {
         return isLoading ? (
-            <TacoSpinner/>
+            <SpinnerOverlay>
+                <SpinnerContainer />
+            </SpinnerOverlay>
         ) : (
             <WrappedComponent {...otherProps} />
         )

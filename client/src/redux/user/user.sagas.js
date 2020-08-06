@@ -125,7 +125,6 @@ export function* onSignUpSuccess() {
 
 export function* updateUser({payload: {collectionKey, userId, userCredential}}) {
     try {
-        console.log(collectionKey, userId, userCredential)
        yield call(updateCurrentUserInfo, collectionKey, userId, userCredential);
        yield put(updateCurrentUserSuccess());
     } catch (error) {

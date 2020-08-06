@@ -27,7 +27,8 @@ export const CartItemImageBox = styled.div`
     background: #fff;
 
     @media screen and (max-width: 800px) {
-        height: 10rem;
+        width: 100%;
+        height: 20rem;
     }
 `;
 
@@ -56,6 +57,7 @@ export const CartItemDesc = styled.div`
 
     @media screen and (max-width: 800px) {
         justify-content: center;
+        flex-basis: 100%;
     }
 `;
 
@@ -94,6 +96,10 @@ export const CartItemPrice = styled.div`
     display: flex;
     justify-content: space-around;
     font-size: 0.8rem;
+
+    @media screen and (max-width: 800px) {
+        flex-basis: 100%;
+    }
 `;
 
 export const CartItemQuantity = styled.div`

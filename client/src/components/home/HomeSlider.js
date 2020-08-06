@@ -1,15 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Slider from 'react-slick';
+import lozad from 'lozad';
 
-import SlideA from '../../assets/images/slide_a.jpg';
-import SlideB from '../../assets/images/slide_b.jpg';
-import SlideC from '../../assets/images/slide_c.jpg';
+import SlideA from '../../assets/images/slide_a.webp';
+import SlideB from '../../assets/images/slide_b.webp';
+import SlideC from '../../assets/images/slide_c.webp';
 
 import '../../styles/css/home-slider.styles.scss';
 import {FeaturedButton, FeaturedContent, FeaturedHeader, FeaturedImage} from '../../styles/js/homes-slider.styles';
 
 const HomeSlider = () => {
-    
+
+    useEffect(()=>{
+        const observer = lozad(); // lazy loads elements with default selector as '.lozad'
+        observer.observe();
+    },[])
+
     const slides = [
         {
             img: SlideA,
@@ -44,9 +50,12 @@ const HomeSlider = () => {
             slides.map((item,i)=>(
                 <div key={i}>
                     <FeaturedImage
-                        style={{
-                            background:`url(${item.img})`,
-                        }}
+                        className="lozad" 
+                        data-placeholder-background="red"
+                        data-background-image-set={`url(${item.img})`}
+                        // style={{
+                        //     background:`url(${item.img})`,
+                        // }}
                     >
                         <FeaturedContent>
                             <FeaturedHeader>{item.line}</FeaturedHeader>  

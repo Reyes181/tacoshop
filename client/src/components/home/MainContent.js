@@ -2,9 +2,9 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import ProductSlider from '../ProductSlider';
 
-import Box1 from '../../assets/images/box_1.png';
-import Box2 from '../../assets/images/box_2.jpg';
-import Box3 from '../../assets/images/box_3.jpg';
+import Box1 from '../../assets/images/box_1.webp';
+import Box2 from '../../assets/images/box_2.webp';
+import Box3 from '../../assets/images/box_3.webp';
 
 import {MainContainer, MainContainerBoxes, Boxes, ContentBox, SecondaryContainer} from '../../styles/js/main-content.styles';
 

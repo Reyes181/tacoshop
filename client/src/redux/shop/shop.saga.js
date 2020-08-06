@@ -35,7 +35,6 @@ export function* fetchCollectionsStart() {
 
 export function* updatePurchasehistory({payload: {collectionKey, userId, purchaseHistory}}) {
     try {
-        console.log(collectionKey, userId, purchaseHistory)
        yield call(addPurchaseHistory, collectionKey, userId, purchaseHistory);
        yield put(purchaseHistorySuccess());
     } catch (error) {

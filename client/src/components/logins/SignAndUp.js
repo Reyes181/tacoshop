@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
-import LoginImg from '../../assets/images/login_img.jpg';
-import CreateAccImg from '../../assets/images/create_acc_img.jpg';
+import LoginImg from '../../assets/images/login_img.webp';
+import CreateAccImg from '../../assets/images/create_acc_img.webp';
 import {Login, LoginContainer, LoginHeader, LoginBackground, LoginBackgroundContainer, LoginButton} from '../../styles/js/login.styles';
 
 

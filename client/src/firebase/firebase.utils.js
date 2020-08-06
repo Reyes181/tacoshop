@@ -45,7 +45,6 @@ export const addCollectionAndDocs = async (collectionKey, objectsToAdd) => {
     const batch = firestore.batch();
 
     objectsToAdd.forEach(obj => {
-        console.log(obj)
         const newDocRef = collectionRef.doc(obj.title);
         batch.set(newDocRef, obj);
     })
@@ -77,7 +76,7 @@ export const getCurrentUser = () => {
 
 export const checkUserVerified = (userAuth) => {
     let userResult = [];
-    console.log(userAuth)
+
     let user = userAuth.emailVerified
     
     if(user){
@@ -98,7 +97,7 @@ export const sendVerification = async (userAuth) => {
        console.log(error)
        resultMessage.push({message: 'An error occured, failed to send email', success: false})
     });
-    console.log(resultMessage)
+    
     return resultMessage
 }
 
@@ -133,14 +132,13 @@ export const getUserPurchase = async (collectionKey, currentId) => {
         
         querySnapshot.forEach(function(doc) {
             // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data());
             purchaseArray.push(doc.data().purchaseHistory)
         });
     })
     .catch(function(error) {
         console.log("Error getting documents: ", error);
     });
-    console.log(purchaseArray);
+    
     return purchaseArray
 }
 

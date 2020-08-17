@@ -11,6 +11,10 @@ export const PurchaseHeaders = styled.div`
     justify-content: space-around;
     padding-bottom: 1rem;
     font-family: 'Interstate';
+
+    @media screen and (max-width: 800px) {
+        flex-direction: column;
+    }
 `;
 
 export const PurchaseColumn = styled.div`

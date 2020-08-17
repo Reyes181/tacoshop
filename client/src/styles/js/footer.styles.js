@@ -193,6 +193,10 @@ export const FootRight = styled.div`
             input, textarea {
                 width: 80%
             }
+
+            button {
+                width: 65%
+            }
         }
     }
 `;

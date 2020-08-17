@@ -46,6 +46,7 @@ const FormField = ({formdata, id, change}) => {
                             :null
                         }
                         <textarea
+                            {...formdata.config}
                             value={formdata.value}
                             onChange={(event)=> change({event,id})}
                         />

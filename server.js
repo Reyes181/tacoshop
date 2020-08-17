@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const compression = require('compression');
 const enforce = require('express-sslify');
+const sendEmail = require('./mailer/index');
 
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
@@ -12,9 +13,9 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(enforce.HTTPS({trustProtoHeader: true}));
+app.use(bodyParser.json({limit: "50mb"}));
+app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
+
 app.use(cors());
 
 if (process.env.NODE_ENV === 'production') {
@@ -47,3 +48,19 @@ app.post('/payment', (req, res) => {
     }
   });
 });
+
+app.post('/email_welcome', (req, res) => {
+  console.log(req.body)
+  const {to, name, token, type} = req.body;
+  sendEmail(to, name, token, type);
+  return res.status(200).json({success: true})
+});
+
+app.post('/email_purchase', (req, res) => {
+  console.log(req.body)
+  const {to, name, token, type, transactionData} = req.body;
+  const {cartItems, total, todayDate, orderNumber} = transactionData;
+  let transactionDataNew = {cartItems, total, todayDate, orderNumber};
+  sendEmail(to, name, token, type, transactionDataNew);
+  return res.status(200).json({success: true})
+})

@@ -56,6 +56,14 @@ export const CollectionItemBox = styled.div`
     text-align: center;
     margin-bottom: 2.4rem;
 
+    .LazyLoad {
+        background-color: grey;
+      
+        &.is-visible {
+          background-color: inherit;
+        }
+    }
+
     div {
         background-repeat: no-repeat !important;
         background-position: center !important;

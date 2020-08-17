@@ -8,6 +8,9 @@ const UserPurchase = (props) => {
     return (
         <PurchaseContainer>
             <PurchaseHeaders>
+                <span>Order: {item.orderNumber}</span>
+            </PurchaseHeaders>
+            <PurchaseHeaders>
                 <span>
                     Shipping: 
                     {item.notZero !== '0' ?

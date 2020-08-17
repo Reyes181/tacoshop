@@ -2,7 +2,6 @@ import React, {useEffect, Suspense, lazy} from 'react';
 import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
 import {Switch, Route, Redirect} from 'react-router-dom';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 import {selectCurrentUser, selectIsUserLoaded} from './redux/user/user.selectors';
 import {checkUserSession, userVerified} from './redux/user/user.action';
@@ -10,8 +9,10 @@ import { fetchCollectionStart } from './redux/shop/shop.action';
 import {selectIsCollectionFetching, selectIsCollectionsLoaded} from './redux/shop/shop.selectors';
 
 import Layout from './hoc/Layout';
+import Spinner from './hoc/Spinner';
 import WithSpinner from './hoc/WithSpinner';
 import ErrorBoundary from './hoc/ErrorBoundary';
+
 
 import SauceBanner from './assets/images/sauce-packets-banner.webp';
 import ClothingBanner from './assets/images/clothing-banner.webp';
@@ -45,7 +46,7 @@ const App = ({fetchCollectionStart, checkUserSession, userVerified, isCollection
     <div>
       <Layout>
         <Switch>
-          <Suspense fallback={<CircularProgress/>}>
+          <Suspense fallback={<Spinner/>}>
           <ErrorBoundary>
             <Route 
               exact 
@@ -111,6 +112,10 @@ const App = ({fetchCollectionStart, checkUserSession, userVerified, isCollection
                 () => currentUser ?( <Redirect to='/'/>) : (<SignAndUp/>)
               }
             />
+            
+            
+            <Redirect from="*" to="/"/>
+            
           </ErrorBoundary>
           </Suspense>
         </Switch>

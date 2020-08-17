@@ -54,12 +54,12 @@ const Collection = ({shopItems, title, banner}) => {
             {currentItems.map(item => (
                     <CollectionItemBox key={item.id}>
                         <Link to={{pathname: `/shop/item/${item.name}`, state:{product: item , collection: itemList}}}>
-                        <img
-                          src={item.imageUrl}
-                          alt={item.name}
-                          onMouseOver={e => (e.currentTarget.src = item.images.length !== 1 ? item.images[1] : item.images[0])}
-                          onMouseLeave={e => (e.currentTarget.src = item.images[0])}
-                        />
+                          <img
+                            src={item.imageUrl}
+                            alt={item.name}
+                            onMouseOver={e => (e.currentTarget.src = item.images.length !== 1 ? item.images[1] : item.images[0])}
+                            onMouseLeave={e => (e.currentTarget.src = item.images[0])}
+                          />
                         </Link>
                         
                         <h5>{item.name}</h5>

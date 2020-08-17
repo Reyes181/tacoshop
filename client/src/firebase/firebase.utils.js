@@ -2,6 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 import 'firebase/database';
+import axios from 'axios';
 
 
 const firebaseConfig = {
@@ -14,7 +15,9 @@ const firebaseConfig = {
     appId: "1:710743021663:web:eef54195607c306d3b23ea",
     measurementId: "G-VNLRFTXNL7"
 };
+
 firebase.initializeApp(firebaseConfig);
+
 export const createUserProfileDocument = async (userAuth, additionalData) => {
     if(!userAuth) return;
     const userRef = firestore.doc(`users/${userAuth.uid}`);
@@ -30,6 +33,20 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
                 email,
                 createdAt,
                 ...additionalData
+            });
+            axios({
+                url: '/email_welcome',
+                method: 'post',
+                data: {
+                    to: email,
+                    name: additionalData.displayName,
+                    token: null,
+                    type: 'welcome'
+                }
+            }).then(response => {
+                console.log(response)
+            }).catch(error => {
+                console.log(JSON.parse(error))
             })
         } catch (error) {
             console.log('error creating user', error.message)
@@ -115,8 +132,24 @@ export const updateCurrentUserInfo = async (collectionKey, userId, userCredentia
     return userRef;
 };
 
-export const addPurchaseHistory = async (collectionKey, userId, purchaseHistory) => {
+export const addPurchaseHistory = async (collectionKey, userId, purchaseHistory, currentUser) => {
     const collectionRef = firestore.collection(collectionKey);
+    const {email, displayName} = currentUser
+    axios({
+        url: '/email_purchase',
+        method: 'post',
+        data: {
+            to: email,
+            name: displayName,
+            token: null,
+            type: 'purchase',
+            transactionData: purchaseHistory
+        }
+    }).then(response => {
+        console.log(response)
+    }).catch(error => {
+        console.log(JSON.parse(error))
+    })
 
     return await collectionRef.add({
         userId: userId,

@@ -105,21 +105,28 @@ function UserDashboard({currentUser, userIsVerified, userPurchase, fetchPurchase
                 <UserInfoPanel>
                     <h1>Purchase History</h1>
                     <UserInfoContent>
-                        {userPurchase ? 
-                        <>
-                            {userPurchase.length !== 0 ?
+                        {state.verified ?
                             <>
-                                {userPurchase.map((item, i) =>(
-                                    <UserPurchase key={i} item={item}/>
-                                ))}
+                            {userPurchase ? 
+                                <>
+                                    {userPurchase.length !== 0 ?
+                                    <>
+                                        {userPurchase.map((item, i) =>(
+                                            <UserPurchase key={i} item={item}/>
+                                        ))}
+                                    </>
+                                    :
+                                        <h4>No purchase(s) have been made</h4>
+                                    }
+                                </>
+                                :
+                                    <LinearProgress/>
+                            }
                             </>
                             :
-                                <h4>No purchase(s) have been made</h4>
-                            }
-                        </>
-                        :
-                            <LinearProgress/>
+                            <h4>Verify your email address to view purchase history.</h4>
                         }
+                        
                         
                     </UserInfoContent>
                 </UserInfoPanel>

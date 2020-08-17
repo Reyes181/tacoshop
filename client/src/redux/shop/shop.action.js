@@ -35,9 +35,9 @@ export const fetchCollectionStartAsync = () => {
     }
 };
 
-export const purchaseHistoryStart = ({collectionKey, userId, purchaseHistory}) => ({
+export const purchaseHistoryStart = ({collectionKey, userId, purchaseHistory, currentUser}) => ({
     type: ShopActionTypes.PURCHASE_HISTORY_START,
-    payload: {collectionKey, userId, purchaseHistory}
+    payload: {collectionKey, userId, purchaseHistory, currentUser}
 });
 
 export const purchaseHistorySuccess = () => ({

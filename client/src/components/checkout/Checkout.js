@@ -2,6 +2,7 @@ import React, {useEffect, useState, memo} from 'react';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
+import { v4 as uuidv4 } from 'uuid';
 
 import {selectCartItems, selectCartItemsTotal} from '../../redux/cart/cart.selectors';
 import {clearCart} from '../../redux/cart/cart.action';
@@ -85,8 +86,9 @@ const CheckoutPage = ({cartItems, subtotal, clearCart, purchaseHistoryStart, cur
         const userId = currentUser.id;
         const collectionKey = 'userProfile';
         let todayDate = moment().format("YYYY-MM-DD");
-        const purchaseHistory = {cartItems, total, notZero, todayDate};
-        await purchaseHistoryStart({collectionKey, userId, purchaseHistory});
+        let orderNumber = uuidv4(); 
+        const purchaseHistory = {cartItems, total, notZero, todayDate, orderNumber};
+        await purchaseHistoryStart({collectionKey, userId, purchaseHistory, currentUser});
         clearCart();
         history.push('/account/dashboard');
     } 

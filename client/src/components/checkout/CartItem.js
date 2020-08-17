@@ -17,7 +17,7 @@ const CartItem = ({item, clearItem, addItem, removeItem}) => {
             <CartItemDesc>
                 <Link  
                     key={item[0].item.id} 
-                    to={{pathname: `/shop/${item[0].item.name}`, state:{product: item[0].item, collection: item[0].collection}}}
+                    to={{pathname: `/shop/item/${item[0].item.name}`, state:{product: item[0].item, collection: item[0].collection}}}
                 >
                      <p>{item[0].item.name}</p>
                 </Link>

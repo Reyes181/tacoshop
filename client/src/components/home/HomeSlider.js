@@ -1,6 +1,5 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Slider from 'react-slick';
-import lozad from 'lozad';
 
 import SlideA from '../../assets/images/slide_a.webp';
 import SlideB from '../../assets/images/slide_b.webp';
@@ -10,11 +9,6 @@ import '../../styles/css/home-slider.styles.scss';
 import {FeaturedButton, FeaturedContent, FeaturedHeader, FeaturedImage} from '../../styles/js/homes-slider.styles';
 
 const HomeSlider = () => {
-
-    useEffect(()=>{
-        const observer = lozad(); // lazy loads elements with default selector as '.lozad'
-        observer.observe();
-    },[])
 
     const slides = [
         {
@@ -50,12 +44,9 @@ const HomeSlider = () => {
             slides.map((item,i)=>(
                 <div key={i}>
                     <FeaturedImage
-                        className="lozad" 
-                        data-placeholder-background="red"
-                        data-background-image-set={`url(${item.img})`}
-                        // style={{
-                        //     background:`url(${item.img})`,
-                        // }}
+                        style={{
+                            background:`url(${item.img})`,
+                        }}
                     >
                         <FeaturedContent>
                             <FeaturedHeader>{item.line}</FeaturedHeader>  

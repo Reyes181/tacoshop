@@ -48,6 +48,10 @@ export const ProductImageContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     height: 45rem;
+
+    @media screen and (max-width: 800px) {
+        height: auto;
+    }
 `;
 
 export const ProductMainImage = styled.div`
@@ -60,6 +64,7 @@ export const ProductMainImage = styled.div`
 
     @media screen and (max-width: 800px) {
         margin: auto;
+        height: 20rem;
     }
 `;
 
@@ -71,7 +76,7 @@ export const ProductImages = styled.div`
     margin: 0 2rem;
 
     @media screen and (max-width: 800px) {
-        height: 10%;
+        height: 9rem;
     }
 `;
 

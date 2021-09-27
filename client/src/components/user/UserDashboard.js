@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {connect} from 'react-redux';
+import {connect, useDispatch} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
 import {selectCurrentUser, selectUserVerified, selectEmailMessageResult} from '../../redux/user/user.selectors';
 import {selectUserPurchase} from '../../redux/shop/shop.selectors';
 import {fetchPurchaseStart} from '../../redux/shop/shop.action';
-import {signOutStart, sendEmailVerify, userVerified} from '../../redux/user/user.action';
+import {signOutStart, sendEmailVerify, userVerified, clearEmailMessage} from '../../redux/user/user.action';
 
 import UserLayout from '../../hoc/UserLayout';
 
@@ -20,6 +20,7 @@ function UserDashboard({currentUser, userIsVerified, userPurchase, fetchPurchase
     const [messageSuccess, setMessageSuccess] = useState('');
     const [messageFailed, setMessageFailed] = useState('');
     const {displayName, email, id} = currentUser;
+    const dispatch = useDispatch();
 
 
     useEffect(() => {
@@ -35,6 +36,7 @@ function UserDashboard({currentUser, userIsVerified, userPurchase, fetchPurchase
         setTimeout(()=> {
             setMessageSuccess('');
             setDisabled(false);
+            dispatch(clearEmailMessage())
         },5000)
     }
 
@@ -65,6 +67,7 @@ function UserDashboard({currentUser, userIsVerified, userPurchase, fetchPurchase
         if(emailMessageResult){
             handleMessage()
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [emailMessageResult])
     
 

@@ -14,6 +14,10 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+
 
 import CartItem from './CartItem';
 import Button from '../Button';
@@ -29,6 +33,8 @@ const CheckoutPage = ({cartItems, subtotal, clearCart, purchaseHistoryStart, cur
     const [total, setTotal] = useState(subtotal);
     const [notZero, setNotZero] = useState('0')
     const [coupon, setCoupon] = useState('');
+    const [open, setOpen] = useState(false);
+    const [resultMessage, setResultMessage] = useState({color: '', message: '', title: ''})
     const [noCoupon, setNoCoupon] = useState(false);
     const [shipping, setShipping] = useState(total);
     const [applied, setApplied] = useState(false);
@@ -90,8 +96,27 @@ const CheckoutPage = ({cartItems, subtotal, clearCart, purchaseHistoryStart, cur
         const purchaseHistory = {cartItems, total, notZero, todayDate, orderNumber};
         await purchaseHistoryStart({collectionKey, userId, purchaseHistory, currentUser});
         clearCart();
-        history.push('/account/dashboard');
+        // setTimeout(() => {
+        //     history.push('/account/dashboard');    
+        //  }, 5000)
+        
     } 
+
+    const purchaseResult = (bool) => {
+        if(bool){
+            let newMessage = {color: 'success', message: 'Payment was Successful', title: 'Confirmed!'}
+            setResultMessage(newMessage)
+            setOpen(true)
+        } else {
+            let newMessage = {color: 'warning', message: 'There was an issue with your payment. Please use the provided test card.', title: 'Warning'}
+            setResultMessage(newMessage)
+            setOpen(true)
+        }
+    }
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return (
         <CheckoutContainer>
@@ -192,7 +217,7 @@ const CheckoutPage = ({cartItems, subtotal, clearCart, purchaseHistoryStart, cur
                                 </>
                             :
                             <>
-                                {notZero !== '0' || subtotal > 49 ? <StripeCheckoutButton price={shipping} handlePaid={handlePaid}/> : <></> }
+                                {notZero !== '0' || subtotal > 49 ? <StripeCheckoutButton price={shipping} handlePaid={handlePaid} purchaseResult={purchaseResult}/> : <></> }
                             </>
                             }
                             
@@ -200,6 +225,21 @@ const CheckoutPage = ({cartItems, subtotal, clearCart, purchaseHistoryStart, cur
                         </CheckoutTotalContainer>
                     </AccordionDetails>
                 </Accordion>
+
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                    maxWidth='md'
+                >
+                    <DialogContent>
+                        <DialogContentText>
+                            {resultMessage.message}
+                        </DialogContentText>
+                    </DialogContent>
+                </Dialog>
+
             </CheckoutOrder>
         </CheckoutContainer>
     )

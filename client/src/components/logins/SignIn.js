@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {createStructuredSelector} from 'reselect';
-import {connect} from 'react-redux';
+import {connect, useDispatch} from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { selectSignInError, selectIsLoading } from '../../redux/user/user.selectors';
 import {auth} from '../../firebase/firebase.utils';
-import {googleSignInStart, emailSignInStart} from '../../redux/user/user.action';
+import {googleSignInStart, emailSignInStart, clearErrorMessage} from '../../redux/user/user.action';
 
 import Button from '../Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -20,6 +20,7 @@ const SignIn = ({emailSignInStart, googleSignInStart, userError, isLoading}) => 
     const [switched, setSwitched] = useState(false);
     const [formSuccess, setFormSuccess] = useState('');
     const [formError, setFormError] = useState('');
+    const dispatch = useDispatch();
     
 
     const {email, password} = userCredentials;
@@ -50,10 +51,15 @@ const SignIn = ({emailSignInStart, googleSignInStart, userError, isLoading}) => 
     }
 
     useEffect(() => {
-        if(userError){
-            setFormError(userError.message)
+        if(userError !== null){
+            setFormError(userError);
         }
-    }, [userError])
+        const timeout = setTimeout(() => {
+            setFormError('');
+            dispatch(clearErrorMessage());
+         }, 4000);
+         return () => clearTimeout(timeout);
+    }, [userError, dispatch])
 
     const handleReset = async (e) => {
         e.preventDefault();

@@ -96,5 +96,13 @@ export const updateCurrentUserSuccess = () => ({
 export const updateCurrentUserFailure = (error) => ({
     type: UserActionTypes.UPDATE_CURRENT_USER_FAILURE,
     payload: error
-})
+});
+
+export const clearErrorMessage = () => ({
+    type: UserActionTypes.CLEAR_ERROR_MESSAGE
+});
+
+export const clearEmailMessage = () => ({
+    type: UserActionTypes.CLEAR_EMAIL_MESSAGE
+});
 

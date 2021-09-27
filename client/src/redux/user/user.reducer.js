@@ -4,7 +4,8 @@ const INITIAL_STATE = {
     currentUser: null,
     userVerified: null,
     emailMessageResult: [{message: '', success: false}],
-    isLoading: false
+    isLoading: false,
+    error: null
 }
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -42,6 +43,16 @@ const userReducer = (state = INITIAL_STATE, action) => {
                 emailMessageResult: action.payload,
                 error: null
             }
+        case UserActionTypes.CLEAR_ERROR_MESSAGE:
+            return {
+                ...state,
+                error: null
+            }
+        case UserActionTypes.CLEAR_EMAIL_MESSAGE:
+            return {
+                ...state,
+                emailMessageResult: [{message: '', success: true}]
+            }
         case UserActionTypes.SIGN_IN_FAILURE:
         case UserActionTypes.SIGN_OUT_FAILURE:
         case UserActionTypes.SIGN_UP_FAILURE:
@@ -50,7 +61,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
         case UserActionTypes.SEND_EMAIL_VERIFICATION_FAILURE:
             return {
                 ...state,
-                error: action.payload,
+                error: action.payload.message,
                 isLoading: false
             }
 

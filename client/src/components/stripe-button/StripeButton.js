@@ -1,10 +1,10 @@
 import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
-import TacoBrand from '../../assets/images/taco_circle.jpg'
+import TacoBrand from '../../assets/images/taco_circle.jpg';
 
 
-const StripeCheckoutButton = ({price, handlePaid}) => {
+const StripeCheckoutButton = ({price, handlePaid, purchaseResult}) => {
     const priceForStripe = price * 100;
     const publishableKey = 'pk_test_DY7JAvpbGUf5IRqRAd5Z8SCX00kdmpcJEi';
 
@@ -20,10 +20,10 @@ const StripeCheckoutButton = ({price, handlePaid}) => {
             }
         }).then(response => {
             handlePaid(true);
-            alert('Payment was Successful')
+            purchaseResult(true);
         }).catch(error => {
             console.log('Payment error: ', JSON.parse(error))
-            alert('There was an issue with your payment. Please use the provided test card.')
+            purchaseResult(false)
         })
     }
     

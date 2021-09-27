@@ -1,20 +1,32 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { withRouter } from 'react-router-dom';
-import {connect} from 'react-redux';
+import {connect, useDispatch} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
 
-import {signUpStart} from '../../redux/user/user.action';
-import { selectIsLoading } from '../../redux/user/user.selectors';
+import {signUpStart, clearErrorMessage} from '../../redux/user/user.action';
+import { selectIsLoading, selectSignInError } from '../../redux/user/user.selectors';
 
 import {SigninContainer, SigninInput, CreateForm, FormBlock} from '../../styles/js/signin.styles';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '../Button';
 
-const SignUp = ({signUpStart, isLoading}) => {
+const SignUp = ({signUpStart, isLoading, userError}) => {
     const [signUpCredential, setSignUpCredential] = useState({email: '', password: '', firstName: '', lastName: ''})
-    
-    const {email, password, firstName, lastName} = signUpCredential
+    const [formError, setFormError] = useState('');
+    const {email, password, firstName, lastName} = signUpCredential;
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if(userError !== null){
+            setFormError(userError)
+        };
+        const timeout = setTimeout(() => {
+            setFormError('');
+            dispatch(clearErrorMessage());
+         }, 4000);
+         return () => clearTimeout(timeout);
+    }, [userError, dispatch])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -64,6 +76,7 @@ const SignUp = ({signUpStart, isLoading}) => {
                 :
                     <CircularProgress/>
                 }
+                 <h4 style={{color: '#FF3366'}}>{formError}</h4>
             </CreateForm>
         </SigninContainer>
     )
@@ -71,7 +84,8 @@ const SignUp = ({signUpStart, isLoading}) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-    isLoading: selectIsLoading
+    isLoading: selectIsLoading,
+    userError: selectSignInError
 });
 
 const mapDispatchToProps = dispatch => ({

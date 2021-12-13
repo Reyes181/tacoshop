@@ -63,3 +63,18 @@ export const fetchPurchaseFailure = (error) => ({
     type: ShopActionTypes.FETCH_USERS_PURCHASE_FAILURE,
     payload: error
 });
+
+export const sendPurchaseEmailStart = (data) => ({
+    type: ShopActionTypes.SEND_PURCHASE_EMAIL_START,
+    payload: data
+});
+
+export const sendPurchaseEmailSuccess = (data) => ({
+    type: ShopActionTypes.SEND_PRUCHASE_EMAIL_SUCCESS,
+    payload: data
+});
+
+export const sendPurchaseEmailFailure = (error) => ({
+    type: ShopActionTypes.SEND_PURCHASE_EMAIL_FAILURE,
+    payload: error
+});

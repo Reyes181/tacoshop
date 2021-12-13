@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {selectCartItems, selectCartItemsTotal} from '../../redux/cart/cart.selectors';
 import {clearCart} from '../../redux/cart/cart.action';
 import {selectCurrentUser, selectUserVerified} from '../../redux/user/user.selectors';
-import {purchaseHistoryStart} from '../../redux/shop/shop.action';
+import {purchaseHistoryStart, sendPurchaseEmailStart} from '../../redux/shop/shop.action';
 import {userVerified} from '../../redux/user/user.action';
 
 import Accordion from '@material-ui/core/Accordion';
@@ -29,7 +29,7 @@ import {CheckoutContainer, CheckoutAlert, CheckoutCouponContainer, CheckoutOldPr
 } from '../../styles/js/checkout.styles';
 
 
-const CheckoutPage = ({cartItems, subtotal, clearCart, purchaseHistoryStart, currentUser, userVerified, userIsVerified, history}) => {
+const CheckoutPage = ({cartItems, subtotal, clearCart, purchaseHistoryStart, currentUser, userVerified, userIsVerified, history, sendPurchaseEmailStart}) => {
     const [total, setTotal] = useState(subtotal);
     const [notZero, setNotZero] = useState('0')
     const [coupon, setCoupon] = useState('');
@@ -93,8 +93,16 @@ const CheckoutPage = ({cartItems, subtotal, clearCart, purchaseHistoryStart, cur
         const collectionKey = 'userProfile';
         let todayDate = moment().format("YYYY-MM-DD");
         let orderNumber = uuidv4(); 
+        let to = currentUser.email;
+        let name = currentUser.displayName;
+        let token = currentUser.id;
+        let transactiondata = {cartItems, total, todayDate, orderNumber};
+        let type = 'purchase';
+        let data = {to, name, token, transactiondata, type};
         const purchaseHistory = {cartItems, total, notZero, todayDate, orderNumber};
         await purchaseHistoryStart({collectionKey, userId, purchaseHistory, currentUser});
+        await sendPurchaseEmailStart(data);
+
         clearCart();
         // setTimeout(() => {
         //     history.push('/account/dashboard');    
@@ -107,6 +115,9 @@ const CheckoutPage = ({cartItems, subtotal, clearCart, purchaseHistoryStart, cur
             let newMessage = {color: 'success', message: 'Payment was Successful', title: 'Confirmed!'}
             setResultMessage(newMessage)
             setOpen(true)
+            setTimeout(() => {
+                history.push('/account/dashboard');    
+            }, 5000)
         } else {
             let newMessage = {color: 'warning', message: 'There was an issue with your payment. Please use the provided test card.', title: 'Warning'}
             setResultMessage(newMessage)
@@ -126,7 +137,7 @@ const CheckoutPage = ({cartItems, subtotal, clearCart, purchaseHistoryStart, cur
                         <ShoppingCartIcon style={{fill: '#449d97'}}/>
                         <CheckoutOrderHeader>
                             <p style={{color: '#449d97'}}>Order summary</p>
-                            <p id='card'>*For testing payment use the following card: 4242 4242 4242 4242 - Exp: 01/22 - CVV: 123</p>
+                            <p id='card'>*For testing payment use the following card: 4242 4242 4242 4242 - Exp: 01/24 - CVV: 123</p>
                             <p>${Number.parseFloat(shipping).toFixed(2)}</p>
                         </CheckoutOrderHeader>
                         
@@ -248,6 +259,7 @@ const CheckoutPage = ({cartItems, subtotal, clearCart, purchaseHistoryStart, cur
 const mapDispatchToProps = dispatch => ({
     clearCart: () => dispatch(clearCart()),
     purchaseHistoryStart: purchaseCrendential => dispatch(purchaseHistoryStart(purchaseCrendential)),
+    sendPurchaseEmailStart: data => dispatch(sendPurchaseEmailStart(data)),
     userVerified: () => dispatch(userVerified())
 })
 

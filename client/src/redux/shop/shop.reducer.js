@@ -25,6 +25,18 @@ const shopReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 userPurchase: action.payload
             }
+        case ShopActionTypes.SEND_PRUCHASE_EMAIL_SUCCESS:
+            return {
+                ...state,
+                purchaseSuccess: action.payload
+            }
+        case ShopActionTypes.SEND_PURCHASE_EMAIL_FAILURE:
+            return {
+                ...state,
+                isFetching: false,
+                purchaseSuccess: action.payload,
+                errorMessage: action.payload
+            }
         case ShopActionTypes.FETCH_COLLECTIONS_FAILURE:
         case ShopActionTypes.PURCHASE_HISTORY_FAILURE:
         case ShopActionTypes.FETCH_USERS_PURCHASE_FAILURE:

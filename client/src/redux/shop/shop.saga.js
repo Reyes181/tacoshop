@@ -1,9 +1,10 @@
 import {all, call, put, takeLatest} from 'redux-saga/effects';
 import { firestore, convertCollectionsSnapshotToMap, addPurchaseHistory, getUserPurchase } from '../../firebase/firebase.utils';
 import {fetchCollectionSuccess, fetchCollectionFailure, purchaseHistorySuccess, 
-    purchaseHistoryFailure, fetchPurchaseSuccess, fetchPurchaseFailure} from './shop.action'
-
+    purchaseHistoryFailure, fetchPurchaseSuccess, fetchPurchaseFailure, sendPurchaseEmailSuccess, sendPurchaseEmailFailure} from './shop.action'
+import { PURCHASE_SERVER } from '../serverMisc';
 import ShopActionTypes from './shop.types';
+import Axios from 'axios';
 
 
 export function* fetchCollectionsAsync() {
@@ -61,10 +62,31 @@ export function* onUserPurchaseStart() {
     yield takeLatest(ShopActionTypes.FETCH_USERS_PURCHASE_START, getPurchaseHistory)
 }
 
+const putPurchaseEmail = async (data) => {
+    let results;
+    await Axios.post(`${PURCHASE_SERVER}`, data)
+    .then(res => results = res.data);
+    return results;
+}
+
+export function* sendPurchaseEmail(data){
+    try {
+        const emailSent = yield call(putPurchaseEmail, data)
+        yield put(emailSent.success ? sendPurchaseEmailSuccess(emailSent) : sendPurchaseEmailFailure(emailSent))
+    } catch(error){
+        yield put(sendPurchaseEmailFailure(error))
+    }
+}
+
+export function* onSendPurchaseEmailStart(){
+    yield takeLatest(ShopActionTypes.SEND_PURCHASE_EMAIL_START, sendPurchaseEmail)
+}
+
 export function* shopSagas() {
     yield(all([
         call(fetchCollectionsStart),
         call(onPurchaseHistoryStart),
-        call(onUserPurchaseStart)
+        call(onUserPurchaseStart),
+        call(onSendPurchaseEmailStart)
     ]))
 }

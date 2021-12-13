@@ -106,3 +106,18 @@ export const clearEmailMessage = () => ({
     type: UserActionTypes.CLEAR_EMAIL_MESSAGE
 });
 
+export const signupEmailStart = (data) => ({
+    type: UserActionTypes.SIGN_UP_EMAIL_START,
+    payload: data
+});
+
+export const signupEmailSuccess = (data) => ({
+    type: UserActionTypes.SIGN_UP_EMAIL_SUCCESS,
+    payload: data
+});
+
+export const signupEmailFailure = (data) => ({
+    type: UserActionTypes.SIGN_UP_EMAIL_FAILURE,
+    payload: data
+});
+

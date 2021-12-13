@@ -17,6 +17,7 @@ export const CartItemContainer = styled.div`
     @media screen and (max-width: 800px) {
         width: 100%;
         flex-direction: column;
+        height: 50vh;
     }
 `;
 
@@ -28,7 +29,7 @@ export const CartItemImageBox = styled.div`
 
     @media screen and (max-width: 800px) {
         width: 100%;
-        height: 20rem;
+        flex-basis: 50%;
     }
 `;
 
@@ -57,7 +58,7 @@ export const CartItemDesc = styled.div`
 
     @media screen and (max-width: 800px) {
         justify-content: center;
-        flex-basis: 100%;
+        flex-basis: 25%;
     }
 `;
 
@@ -98,7 +99,7 @@ export const CartItemPrice = styled.div`
     font-size: 0.8rem;
 
     @media screen and (max-width: 800px) {
-        flex-basis: 100%;
+        flex-basis: 25%;
     }
 `;
 

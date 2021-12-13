@@ -10,7 +10,7 @@ const getEmailData = (to,name,token,type,transactionData) => {
     switch(type){
         case 'welcome':
             data = {
-                from: 'TacoShop <codeservice10453@gmail.com>',
+                from: 'TacoShop <reyes.coding.21@gmail.com>',
                 to,
                 subject: `Welcome ${name}, and thank you for joining TacoShop`,
                 html: welcome()
@@ -18,7 +18,7 @@ const getEmailData = (to,name,token,type,transactionData) => {
         break;
         case 'purchase':
             data = {
-                from: 'TacoShop <codeservice10453@gmail.com>',
+                from: 'TacoShop <reyes.coding.21@gmail.com>',
                 to,
                 subject: `Purchase summary for ${name}`,
                 html: purchase(transactionData)
@@ -35,7 +35,7 @@ const sendEmail = (to ,name ,token ,type , transactionData = null) => {
     const sntpTransport = mailer.createTransport({
         service:'Gmail',
         auth:{
-            user: 'codeservice10453@gmail.com',
+            user: 'reyes.coding.21@gmail.com',
             pass: process.env.PASS
         }
     });

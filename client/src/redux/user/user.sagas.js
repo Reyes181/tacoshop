@@ -2,11 +2,14 @@ import {takeLatest, put, all, call} from 'redux-saga/effects';
 import UserActionTypes from './user.types';
 import {signInSuccess, signInFailure, signOutSuccess, signOutFailure, 
         signUpFailure, signUpSuccess, updateCurrentUserSuccess, updateCurrentUserFailure,
-        userVerifiedSuccess, userVerifiedFailure, sendEmailVerifyFailure, sendEmailVerifySuccess
+        userVerifiedSuccess, userVerifiedFailure, sendEmailVerifyFailure, sendEmailVerifySuccess,
+        signupEmailFailure, signupEmailSuccess
 } from './user.action';
 import {auth, googleProvider, createUserProfileDocument, getCurrentUser, 
     updateCurrentUserInfo, checkUserVerified, sendVerification
 } from '../../firebase/firebase.utils';
+import {SIGN_UP_SERVER} from '../serverMisc';
+import Axios from 'axios';
 
 export function* getSnapshotFromUserAuth(userAuth, additionalData) {
     try {
@@ -106,6 +109,7 @@ export function* signUp({payload: {email, password, displayName}}) {
         const {user} = yield auth.createUserWithEmailAndPassword(email, password);
         
         yield put(signUpSuccess({user, additionalData: {displayName}}))
+        yield put(sendSignUpEmail({'to': email, 'name': displayName, 'token': user , 'type': 'welcome'}))
     } catch(error) {
         yield put(signUpFailure(error));
     }
@@ -144,6 +148,26 @@ export function* onUpdateCurrentUserSuccess() {
     yield takeLatest(UserActionTypes.UPDATE_CURRENT_USER_SUCCESS, refreshAfterUpdate)
 }
 
+const putSignUpEmail = async (data) => {
+    let results;
+    await Axios.post(`${SIGN_UP_SERVER}`, data)
+    .then(res => results = res.data);
+    return results;
+}
+
+export function* sendSignUpEmail(data){
+    try{
+        const emailSent = yield call(putSignUpEmail, data)
+        yield put(emailSent.success ? signupEmailSuccess(emailSent) : signupEmailFailure(emailSent))
+    } catch(error){
+        yield put(signupEmailFailure(error))
+    }
+}
+
+export function* onSignUpEmailStart(){
+    yield takeLatest(UserActionTypes.SIGN_UP_EMAIL_START, sendSignUpEmail)
+}
+
 export function* userSagas() {
     yield all([
         call(onGoogleSignInstart), 
@@ -155,6 +179,7 @@ export function* userSagas() {
         call(onUpdateCurrentUserStart),
         call(onUpdateCurrentUserSuccess),
         call(onIsUserVerified),
-        call(onSendEmailVerification)
+        call(onSendEmailVerification),
+        call(onSignUpEmailStart)
     ])
 }

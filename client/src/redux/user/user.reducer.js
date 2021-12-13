@@ -4,6 +4,7 @@ const INITIAL_STATE = {
     currentUser: null,
     userVerified: null,
     emailMessageResult: [{message: '', success: false}],
+    signUpSuccess: null,
     isLoading: false,
     error: null
 }
@@ -52,6 +53,18 @@ const userReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 emailMessageResult: [{message: '', success: true}]
+            }
+        case UserActionTypes.SIGN_UP_EMAIL_SUCCESS:
+            return {
+                ...state,
+                signUpSuccess: action.payload
+            }
+        case UserActionTypes.SIGN_UP_EMAIL_FAILURE:
+            return {
+                ...state,
+                signUpSuccess: action.payload,
+                error: action.payload.message,
+                isLoading: false
             }
         case UserActionTypes.SIGN_IN_FAILURE:
         case UserActionTypes.SIGN_OUT_FAILURE:

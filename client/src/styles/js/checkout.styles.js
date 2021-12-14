@@ -63,15 +63,7 @@ export const CheckoutOrderContainer = styled.div`
     justify-content: center;
     margin: 0 auto;
 
-    @media screen and (max-width: 800px) {
-        #checkoutQurieContainer {
-            flex-direction: row !important;
-        }
-
-        #checkoutQurieImg {
-            flex-basis: 100%
-        }
-    }
+   
 `;
 
 export const CheckoutCouponContainer = styled.div`

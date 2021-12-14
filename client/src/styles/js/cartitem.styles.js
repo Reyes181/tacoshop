@@ -18,6 +18,10 @@ export const CartItemContainer = styled.div`
         width: 100%;
         flex-direction: column;
         height: 50vh;
+
+        hr {
+            display: none;
+        }
     }
 `;
 

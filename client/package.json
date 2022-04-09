@@ -12,7 +12,7 @@
     "@types/react": "^17.0.24",
     "axios": "^0.24.0",
     "firebase": "^9.6.2",
-    "moment": "^2.27.0",
+    "moment": "^2.29.2",
     "node-sass": "^7.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
